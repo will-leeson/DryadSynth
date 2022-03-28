@@ -11,6 +11,8 @@ import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 
 public class Run {
+	public static String queryName = "";
+	public static int queryNumber = 0;
 	public static void main(String[] args) throws Exception {
 
 		long startTime = System.currentTimeMillis();
