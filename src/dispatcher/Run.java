@@ -15,11 +15,6 @@ public class Run {
 	public static String queryName = "";
 	public static int queryNumber = 0;
 	public static void main(String[] args) throws Exception {
-		queryName = args[0].substring(0, args[0].lastIndexOf('.'));
-		File dir = new File(queryName);
-		if (!dir.exists()){
-			dir.mkdirs();
-		}
 		long startTime = System.currentTimeMillis();
         OptionParser oParser = new OptionParser();
         oParser.acceptsAll(Arrays.asList("m", "maxSAT"), "Enable maxSAT");
@@ -67,6 +62,12 @@ public class Run {
         }
 
         String fn = (String)options.nonOptionArguments().get(0);
+
+		queryName = fn.substring(0, fn.lastIndexOf('.'));
+		File dir = new File(queryName);
+		if (!dir.exists()){
+			dir.mkdirs();
+		}
 
 		// ANTLRFileStream is deprecated as of antlr 4.7, use it with antlr 4.5 only
 		ANTLRFileStream input = new ANTLRFileStream(fn);
