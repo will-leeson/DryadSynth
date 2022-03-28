@@ -11,7 +11,7 @@ public class Utils {
 
 		Synth.queryNumber++;
 
-		query = "(set-logic LIA)\n" + query + "(check-sat)\n";
+		query = "(set-info :smt-lib-version 2.6)\n (set-logic LIA)\n" + query + "(check-sat)\n";
 	
 		try(FileOutputStream fos = new FileOutputStream(file); 
 			BufferedOutputStream bos = new BufferedOutputStream(fos)){
