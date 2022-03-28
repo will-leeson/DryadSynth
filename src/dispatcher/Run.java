@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.*;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
@@ -14,7 +15,11 @@ public class Run {
 	public static String queryName = "";
 	public static int queryNumber = 0;
 	public static void main(String[] args) throws Exception {
-
+		queryName = args[0].substring(0, args[0].lastIndexOf('.'));
+		File dir = new File(queryName);
+		if (!dir.exists()){
+			dir.mkdirs();
+		}
 		long startTime = System.currentTimeMillis();
         OptionParser oParser = new OptionParser();
         oParser.acceptsAll(Arrays.asList("m", "maxSAT"), "Enable maxSAT");
