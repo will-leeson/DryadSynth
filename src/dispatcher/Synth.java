@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.*;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
@@ -7,8 +8,14 @@ import java.util.logging.Logger;
 import com.microsoft.z3.enumerations.Z3_ast_print_mode;
 
 public class Synth {
+	public static String queryName = "";
+	public static int queryNumber = 0;
 	public static void main(String[] args) throws Exception {
-
+		queryName = args[0].substring(0, args[0].lastIndexOf('.'));
+		File dir = new File(queryName);
+		if (!dir.exists()){
+			dir.mkdirs();
+		}
 		long startTime = System.currentTimeMillis();
 
 		// ANTLRFileStream is deprecated as of antlr 4.7, use it with antlr 4.5 only

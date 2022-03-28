@@ -845,6 +845,12 @@ public class SygusDispatcher {
         solver.push();
         solver.add(z3ctx.mkNot((BoolExpr)spec));
         Status status = solver.check();
+        String smtQuery = solver.toString();
+		String nameofCurrMethod = new Throwable()
+                                      .getStackTrace()[0]
+                                      .getMethodName();
+		smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+		Utils.dumpSMT(smtQuery);
         solver.pop();
         return status == Status.UNSATISFIABLE;
 
@@ -969,6 +975,9 @@ public class SygusDispatcher {
             Expr trans = extractor.invConstraints.get(name)[1].getDef();
             Expr post = extractor.invConstraints.get(name)[2].getDef();
 
+            Status status;
+            String smtQuery;
+            String nameofCurrMethod;
             for(Set<Expr> exprset : relation) {
                 Set<Expr> otherset = new HashSet<Expr>();
                 for (Expr e : extractor.requestArgs.get(name)) {
@@ -985,7 +994,13 @@ public class SygusDispatcher {
                     otherargs, post, 0, new Pattern[] {}, new Expr[] {}, z3ctx.mkSymbol(""), z3ctx.mkSymbol(""));
                 BoolExpr constraint = z3ctx.mkImplies(z3ctx.mkAnd(withArg, withoutArg), (BoolExpr)post);
                 solver.add(z3ctx.mkNot(constraint));
-                Status status = solver.check();
+                status = solver.check();
+                smtQuery = solver.toString();
+                nameofCurrMethod = new Throwable()
+                                            .getStackTrace()[0]
+                                            .getMethodName();
+                smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+                Utils.dumpSMT(smtQuery);
                 if (status != Status.UNSATISFIABLE) {
                     return false;
                 }
@@ -1015,6 +1030,12 @@ public class SygusDispatcher {
                 solver.reset();
                 solver.add(z3ctx.mkNot(constraint));
                 status = solver.check();
+                smtQuery = solver.toString();
+                nameofCurrMethod = new Throwable()
+                                            .getStackTrace()[0]
+                                            .getMethodName();
+                smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+                Utils.dumpSMT(smtQuery);
                 if (status != Status.UNSATISFIABLE) {
                     return false;
                 }
@@ -1037,6 +1058,9 @@ public class SygusDispatcher {
             }
             Expr pre = extractor.invConstraints.get(name)[0].getDef();
             Expr trans = extractor.invConstraints.get(name)[1].getDef();
+            Status status;
+            String nameofCurrMethod;
+            String smtQuery;
 
             for(Set<Expr> exprset : relation) {
                 Set<Expr> otherset = new HashSet<Expr>();
@@ -1054,7 +1078,13 @@ public class SygusDispatcher {
                     otherargs, pre, 0, new Pattern[] {}, new Expr[] {}, z3ctx.mkSymbol(""), z3ctx.mkSymbol(""));
                 BoolExpr constraint = z3ctx.mkImplies((BoolExpr)pre, z3ctx.mkOr(withArg, withoutArg));
                 solver.add(z3ctx.mkNot(constraint));
-                Status status = solver.check();
+                status = solver.check();
+                smtQuery = solver.toString();
+                nameofCurrMethod = new Throwable()
+                                            .getStackTrace()[0]
+                                            .getMethodName();
+                smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+                Utils.dumpSMT(smtQuery);
                 if (status != Status.UNSATISFIABLE) {
                     return false;
                 }
@@ -1084,6 +1114,12 @@ public class SygusDispatcher {
                 solver.reset();
                 solver.add(z3ctx.mkNot(constraint));
                 status = solver.check();
+                smtQuery = solver.toString();
+                nameofCurrMethod = new Throwable()
+                                            .getStackTrace()[0]
+                                            .getMethodName();
+                smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+                Utils.dumpSMT(smtQuery);
                 if (status != Status.UNSATISFIABLE) {
                     return false;
                 }
@@ -1108,6 +1144,9 @@ public class SygusDispatcher {
             Expr trans = extractor.invConstraints.get(name)[1].getDef();
             Expr post = extractor.invConstraints.get(name)[2].getDef();
 
+            Status status;
+            String smtQuery;
+            String nameofCurrMethod;
             for(Set<Expr> exprset : relation) {
                 Set<Expr> otherset = new HashSet<Expr>();
                 for (Expr e : extractor.requestArgs.get(name)) {
@@ -1124,7 +1163,13 @@ public class SygusDispatcher {
                     otherargs, pre, 0, new Pattern[] {}, new Expr[] {}, z3ctx.mkSymbol(""), z3ctx.mkSymbol(""));
                 BoolExpr constraint = z3ctx.mkImplies(z3ctx.mkAnd(withArg, withoutArg), (BoolExpr)pre);
                 solver.add(z3ctx.mkNot(constraint));
-                Status status = solver.check();
+                status = solver.check();
+                smtQuery = solver.toString();
+                nameofCurrMethod = new Throwable()
+                                            .getStackTrace()[0]
+                                            .getMethodName();
+                smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+                Utils.dumpSMT(smtQuery);
                 if (status != Status.UNSATISFIABLE) {
                     logger.info("Pre sat.");
                     return false;
@@ -1139,6 +1184,12 @@ public class SygusDispatcher {
                 solver.reset();
                 solver.add(z3ctx.mkNot(constraint));
                 status = solver.check();
+                smtQuery = solver.toString();
+                nameofCurrMethod = new Throwable()
+                                            .getStackTrace()[0]
+                                            .getMethodName();
+                smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+                Utils.dumpSMT(smtQuery);
                 if (status != Status.UNSATISFIABLE) {
                     logger.info("Post sat.");
                     return false;
@@ -2153,6 +2204,12 @@ public class SygusDispatcher {
     	s.push();
     	s.add((BoolExpr)cond);
     	Status status = s.check();
+        String smtQuery = s.toString();
+        String nameofCurrMethod = new Throwable()
+                                    .getStackTrace()[0]
+                                    .getMethodName();
+        smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+        Utils.dumpSMT(smtQuery);
     	if(status == Status.UNSATISFIABLE){
     		s.pop();
     		
@@ -2171,6 +2228,12 @@ public class SygusDispatcher {
     	s.push();
     	s.add((BoolExpr)z3ctx.mkNot((BoolExpr)cond));
     	status = s.check();
+        smtQuery = s.toString();
+        nameofCurrMethod = new Throwable()
+                                    .getStackTrace()[0]
+                                    .getMethodName();
+        smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+        Utils.dumpSMT(smtQuery);
     	if(status == Status.UNSATISFIABLE){
     		s.pop();
     		

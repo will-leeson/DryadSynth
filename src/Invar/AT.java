@@ -81,6 +81,8 @@ public class AT extends Thread {
         }
         if (this.transfunc != null) {
             Set<Region> regions = this.transfunc.getRegions();
+            String smtQuery;
+            String nameofCurrMethod;
             for (Region r1: regions) {
                 for (Region r2: regions) {
                     if (r1 == r2) {
@@ -90,6 +92,12 @@ public class AT extends Thread {
                     Solver s = ctx.mkSolver();
                     s.add(intersec);
                     Status r = s.check();
+                    smtQuery = s.toString();
+                    nameofCurrMethod = new Throwable()
+                                                .getStackTrace()[0]
+                                                .getMethodName();
+                    smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+                    Utils.dumpSMT(smtQuery);
                     if (r != Status.UNSATISFIABLE) {
                         return false;
                     }
@@ -218,6 +226,12 @@ public class AT extends Thread {
         Solver s = ctx.mkSolver();
         s.add(ctx.mkNot(ctx.mkAnd(e1, e2, e3)));
         Status r = s.check();
+        String smtQuery = s.toString();
+        String nameofCurrMethod = new Throwable()
+                                    .getStackTrace()[0]
+                                    .getMethodName();
+        smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+        Utils.dumpSMT(smtQuery);
         if ( r == Status.UNSATISFIABLE ) {
             logger.info("Valid results");
             this.results = new DefinedFunc[] {df};

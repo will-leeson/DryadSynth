@@ -211,6 +211,13 @@ public class Cegis extends Thread{
 			// System.out.println(s);
 
 			Status status = s.check();
+			String smtQuery = s.toString();
+
+			String nameofCurrMethod = new Throwable()
+                                      .getStackTrace()[0]
+                                      .getMethodName();
+			smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+			Utils.dumpSMT(smtQuery);
 			s.pop();
 			return status;
 			//return Status.UNSATISFIABLE;
@@ -313,6 +320,12 @@ public class Cegis extends Thread{
 			s.add(q);
 
 			Status sts = s.check();
+			String smtQuery = s.toString();
+			String nameofCurrMethod = new Throwable()
+                                      .getStackTrace()[0]
+                                      .getMethodName();
+			smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+			Utils.dumpSMT(smtQuery);
 
 			if (sts == Status.SATISFIABLE) {
 				m = s.getModel();
@@ -367,6 +380,13 @@ public class Cegis extends Thread{
 
 			Status sts = s.check();
 
+			String smtQuery = s.toString();
+			String nameofCurrMethod = new Throwable()
+                                      .getStackTrace()[0]
+                                      .getMethodName();
+			smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+			Utils.dumpSMT(smtQuery);
+
 			if (sts == Status.SATISFIABLE) {
 				m = s.getModel();
 			}
@@ -416,6 +436,13 @@ public class Cegis extends Thread{
 			s.add(q);
 
 			Status sts = s.check();
+
+			String smtQuery = s.toString();
+			String nameofCurrMethod = new Throwable()
+                                      .getStackTrace()[0]
+                                      .getMethodName();
+			smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+			Utils.dumpSMT(smtQuery);
 
 			if (sts == Status.SATISFIABLE) {
 				m = s.getModel();
@@ -484,6 +511,13 @@ public class Cegis extends Thread{
 			}
 
 			Status sts = optimize.Check();
+
+			String smtQuery = optimize.toString();
+			String nameofCurrMethod = new Throwable()
+                                      .getStackTrace()[0]
+                                      .getMethodName();
+			smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+			Utils.dumpSMT(smtQuery);
 
 			if (sts == Status.SATISFIABLE) {
 				m = optimize.getModel();

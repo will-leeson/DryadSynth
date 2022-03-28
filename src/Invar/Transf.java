@@ -75,6 +75,12 @@ public class Transf {
         Solver s = z3ctx.mkSolver();
         s.add((BoolExpr)this.rc);
         Status result = s.check();
+        String smtQuery = s.toString();
+        String nameofCurrMethod = new Throwable()
+                                    .getStackTrace()[0]
+                                    .getMethodName();
+        smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+        Utils.dumpSMT(smtQuery);
         if (result == Status.SATISFIABLE) {
             Goal g = z3ctx.mkGoal(false, false, false);
             g.add((BoolExpr)this.rc);
@@ -195,6 +201,12 @@ public class Transf {
         Solver s = z3ctx.mkSolver();
         s.add(z3ctx.mkNot(z3ctx.mkEq(before, after)));
         Status r = s.check();
+        String smtQuery = s.toString();
+        String nameofCurrMethod = new Throwable()
+                                    .getStackTrace()[0]
+                                    .getMethodName();
+        smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+        Utils.dumpSMT(smtQuery);
         return r == Status.SATISFIABLE;
     }
 
@@ -351,7 +363,7 @@ public class Transf {
         for (String name : cVars.keySet()) {
             s.add(ctx.mkNot(ctx.mkEq(cVars.get(name), mkAlt(cVars.get(name), ctx))));
         }
-
+        
         Status sts = s.check();
         if (sts != Status.UNSATISFIABLE){
             return false;

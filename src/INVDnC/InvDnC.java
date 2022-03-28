@@ -202,6 +202,12 @@ public class InvDnC extends Thread {
         BoolExpr preipost = ctx.mkImplies((BoolExpr)prewoargQF, (BoolExpr)postwoargQF);
         solver.add(ctx.mkNot(preipost));
         Status status = solver.check();
+        String smtQuery = solver.toString();
+        String nameofCurrMethod = new Throwable()
+                                    .getStackTrace()[0]
+                                    .getMethodName();
+        smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+        Utils.dumpSMT(smtQuery);
         if (status != Status.UNSATISFIABLE) {
             logger.info("Pre can not imply post. Discard this subproblem.");
             return null;

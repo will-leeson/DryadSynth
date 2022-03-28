@@ -30,6 +30,12 @@ public class ITCegis extends Cegis {
         Solver svr = ctx.mkSolver();
 		svr.add(ctx.mkNot(predToCheck));
 		Status sts = svr.check();
+		String smtQuery = svr.toString();
+		String nameofCurrMethod = new Throwable()
+                                      .getStackTrace()[0]
+                                      .getMethodName();
+		smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+		Utils.dumpSMT(smtQuery);
 		logger.info("Result:" + sts.toString());
 		return sts == Status.UNSATISFIABLE;
 	}
