@@ -365,6 +365,13 @@ public class Transf {
         }
         
         Status sts = s.check();
+
+        String smtQuery = s.toString();
+        String nameofCurrMethod = new Throwable()
+                                    .getStackTrace()[0]
+                                    .getMethodName();
+        smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+        Utils.dumpSMT(smtQuery);
         if (sts != Status.UNSATISFIABLE){
             return false;
         }
@@ -372,6 +379,12 @@ public class Transf {
         s.pop();
         // Solve the deltas
         sts = s.check();
+        smtQuery = s.toString();
+        nameofCurrMethod = new Throwable()
+                                    .getStackTrace()[0]
+                                    .getMethodName();
+        smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+        Utils.dumpSMT(smtQuery);
         if (sts != Status.SATISFIABLE){
             return false;
         }
@@ -395,6 +408,12 @@ public class Transf {
         }
         s.add(ctx.mkNot(base));
         sts = s.check();
+        smtQuery = s.toString();
+        nameofCurrMethod = new Throwable()
+                                    .getStackTrace()[0]
+                                    .getMethodName();
+        smtQuery = ";"+nameofCurrMethod+"\n"+smtQuery;
+        Utils.dumpSMT(smtQuery);
         if (sts != Status.UNSATISFIABLE) {
             return false;
         }
