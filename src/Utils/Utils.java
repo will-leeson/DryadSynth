@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class Utils {
     public static void dumpSMT(String query){
-		File file = new File(Synth.queryName+"/Query"+Synth.queryNumber+".smt2");
+		File file = new File(Run.queryName+"/Query"+Synth.queryNumber+".smt2");
 
 		Synth.queryNumber++;
 
